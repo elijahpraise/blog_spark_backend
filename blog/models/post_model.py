@@ -7,6 +7,7 @@ from django.db import models
 from blog.models.base_model import BaseModelClass
 from blog.models.category_model import Category
 from blog.models.user_model import UserModelClass
+from blog.serializers.user_serializer import UserSerializer, UserProfile
 
 
 class Post(BaseModelClass):
@@ -15,6 +16,23 @@ class Post(BaseModelClass):
     image = models.URLField(null=True, blank=True)
     author = models.ForeignKey(UserModelClass, on_delete=models.CASCADE, blank=False, null=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, null=False)
+    likes = models.IntegerField(blank=False, null=False, default=0)
+
+    @property
+    def author_details(self):
+        return UserProfile(self.author).data
+
+
+
+    def like(self):
+        self.likes += 1
+        self.save()
+        return self
+
+    def unlike(self):
+        self.likes -= 1
+        self.save()
+        return self
 
     def __str__(self):
         return self.title

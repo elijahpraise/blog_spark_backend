@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from blog.models.user_model import UserModelClass
+from blog.serializers.user_serializer import UserProfile, UserSerializer
 
 
 @csrf_exempt
@@ -16,11 +17,7 @@ def login_user(request):
     password = data["password"]
     user = UserModelClass.authenticate_user(email=email, password=password)
     if user:
-        response = dict(
-            id=user.id,
-            email=user.email, gender=user.gender, first_name=user.first_name, last_name=user.last_name,
-            username=user.username, phone_number=user.phone_number,
-            image=user.image, token=user.get_token.key)
+        response = UserSerializer(user).data
         return Response(response, status=status.HTTP_200_OK)
     else:
         response = {"message": "Invalid password or username"}

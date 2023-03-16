@@ -7,12 +7,17 @@ from django.db import models
 from blog.models.base_model import BaseModelClass
 from blog.models.post_model import Post
 from blog.models.user_model import UserModelClass
+from blog.serializers.user_serializer import UserProfile
 
 
 class Comment(BaseModelClass):
     author = models.ForeignKey(UserModelClass, on_delete=models.CASCADE, blank=False, null=False)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=False, null=False)
     content = models.TextField(blank=False, null=False)
+
+    @property
+    def author_details(self):
+        return UserProfile(self.author).data
 
     @staticmethod
     def content_exists(content):

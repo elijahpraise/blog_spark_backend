@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 
 from blog.models.comment_model import Comment
 from blog.serializers.validators import validate_post, validate_author
@@ -12,7 +11,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ['id', 'post', 'author', 'author_details', 'content', 'date_created', 'last_updated']
 
     def create(self, validated_data):
         author = validate_author(validated_data["author"])

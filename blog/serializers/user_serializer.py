@@ -2,13 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from blog.models.user_model import UserModelClass
-
-
-def validate_gender(value) -> str:
-    genders = ["male", "female"]
-    if value not in genders:
-        raise serializers.ValidationError("Gender input isn't valid")
-    return value
+from blog.serializers.validators import validate_gender
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -53,4 +47,4 @@ class UserSerializer(serializers.ModelSerializer):
 class UserProfile(serializers.ModelSerializer):
     class Meta:
         model = UserModelClass
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'gender', 'get_token']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'gender', 'token']
