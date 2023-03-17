@@ -7,7 +7,7 @@ from django.db import models
 from blog.models.base_model import BaseModelClass
 from blog.models.category_model import Category
 from blog.models.user_model import UserModelClass
-from blog.serializers.user_serializer import UserSerializer, UserProfile
+from blog.serializers.user_serializer import UserProfile
 
 
 class Post(BaseModelClass):
@@ -21,8 +21,6 @@ class Post(BaseModelClass):
     @property
     def author_details(self):
         return UserProfile(self.author).data
-
-
 
     def like(self):
         self.likes += 1

@@ -13,7 +13,8 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'author', 'author_details', 'title', 'content', 'category', 'likes', "image"]
+        fields = ['id', 'author', 'author_details', 'title', 'content', 'category', 'likes', "image", 'date_created',
+                  'last_updated']
 
     def create(self, validated_data):
         title = validated_data["title"]
