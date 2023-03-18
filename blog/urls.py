@@ -6,11 +6,12 @@ from blog.views.create_post import create_post
 from blog.views.like_post import like_post, unlike_post
 from blog.views.login_user import login_user
 from blog.views.post import get_posts, post_detail, delete_post, update_post
-from blog.views.register_user import RegisterUser
+from blog.views.register_user import RegisterUser, update_user
 
 urlpatterns = [
     path("register", RegisterUser.as_view(), name="register_user"),
     path("login", login_user, name="login_user"),
+    path("<int:user_id>/update", update_user, name="update_user"),
     path("post", get_posts, name="posts"),
     path("post/create", create_post, name="create_post"),
     path("post/<uuid:post_id>", post_detail, name="post_detail"),

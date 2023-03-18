@@ -44,6 +44,27 @@ class UserSerializer(serializers.ModelSerializer):
         pass
 
 
+class UpdateUserSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(required=False, validators=[
+        UniqueValidator(queryset=UserModelClass.objects.all(), message="A user already exists with this username")])
+    first_name = serializers.CharField(required=False)
+    last_name = serializers.CharField(required=False)
+    email = serializers.EmailField(required=False, validators=[
+        UniqueValidator(queryset=UserModelClass.objects.all(), message="A user already exists with this email")])
+    gender = serializers.CharField(required=False, validators=[validate_gender])
+    phone_number = serializers.CharField(required=False)
+    image = serializers.URLField(required=False)
+    token = serializers.CharField(max_length=255, read_only=True)
+
+    class Meta:
+        model = UserModelClass
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'gender', 'token', 'date_created',
+                  'last_updated', 'image', 'phone_number']
+
+    def create(self, validated_data):
+        pass
+
+
 class UserProfile(serializers.ModelSerializer):
     class Meta:
         model = UserModelClass

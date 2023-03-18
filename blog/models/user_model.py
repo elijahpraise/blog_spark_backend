@@ -15,6 +15,13 @@ class UserModelClass(User, BaseModelClass):
     gender = models.CharField(max_length=6, blank=True, null=True)
     phone_number = models.CharField(max_length=14, blank=False, null=False)
 
+    @staticmethod
+    def exists(user_id):
+        try:
+            return UserModelClass.objects.get(id=user_id)
+        except UserModelClass.DoesNotExist:
+            return False
+
     def _generate_token(self):
         token = Token.objects.create(user=self)
         return token
