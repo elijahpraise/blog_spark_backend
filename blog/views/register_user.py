@@ -16,7 +16,7 @@ class RegisterUser(generics.CreateAPIView):
 
 
 @csrf_exempt
-@api_view(['POST'])
+@api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_user(request, user_id):
     data = request.data

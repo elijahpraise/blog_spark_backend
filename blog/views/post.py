@@ -50,7 +50,7 @@ def delete_post(request, post_id):
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST'])
+@api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_post(request, post_id):
     _post = Post.exists(post_id=post_id)
